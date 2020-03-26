@@ -129,5 +129,9 @@ elif T == 4:
 # Computes the RSE between the images
 err = rse(r, m)
 
+# If S == 1, saves the transformed image
+if S == 1:
+    imageio.imwrite('transformed_img.png', m)
+
 # Prints the output (the error)
 print("%.4f" %err, end='')
