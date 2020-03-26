@@ -9,7 +9,6 @@ Assignment 1: Intensity transformations
 
 import numpy as np
 import imageio
-import matplotlib.pyplot as plt
 
 
 # ..:: Transformation functions ::..
@@ -132,24 +131,3 @@ err = rse(r, m)
 # Prints the output (the error)
 np.set_printoptions(precision=4)
 print("%.4f" %err, end='')
-
-
-# # ******************************************* Test plotting *******************************************
-# print("original image type = ", type(r))
-# print(np.amin(r), np.amax(r))
-
-# print("transformed image type = ", type(m))
-# print(np.amin(m), np.amax(m))
-
-# np.set_printoptions(precision=4)
-# print("RSE type = ", type(err))
-# print("RSE = %.4f" %err)
-
-# plt.subplot(121)
-# plt.axis('off')
-# plt.imshow(r, cmap='gray')
-
-
-# plt.subplot(122)
-# plt.axis('off')
-# plt.imshow(m, cmap='gray')
