@@ -72,7 +72,7 @@ def gamma_adjustment(r, W, Lambda):
     Return:
         image after transformation
     '''
-    return ( W * np.power(r, Lambda) ).astype(np.uint8)
+    return (W * np.power(r, Lambda)).astype(np.uint8)
 
 
 # Root squared error (RSE)
@@ -93,13 +93,14 @@ def rse(r, m):
 # *********************************************** "Main" ***********************************************
 
 # ..:: Reading input data ::..
-filename = str(input()).rstrip() # Image's filename
+filename = str(input()).rstrip() # Image's file name
 r = imageio.imread(filename)     # Reads the image
 T = int(input())                 # Which transformation to apply
 S = int(input())                 # Parameter S (to save or not afterwards)
 
 
 # ..:: Selects which transformation function to call ::..
+
 # Tranformation 1: Inversion
 if T == 1:
     m = invert(r)
@@ -129,5 +130,4 @@ elif T == 4:
 err = rse(r, m)
 
 # Prints the output (the error)
-np.set_printoptions(precision=4)
 print("%.4f" %err, end='')
