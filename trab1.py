@@ -101,7 +101,6 @@ S = int(input())                 # Parameter S (to save or not afterwards)
 
 
 # ..:: Selects which transformation function to call ::..
-
 # Tranformation 1: Inversion
 if T == 1:
     m = invert(r)
