@@ -131,8 +131,7 @@ err = rse(r, m)
 
 # Prints the output (the error)
 np.set_printoptions(precision=4)
-print("RSE type = ", type(err))
-print("RSE = %.4f" %err)
+print("%.4f" %err, end='')
 
 
 # # ******************************************* Test plotting *******************************************
