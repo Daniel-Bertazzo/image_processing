@@ -1,17 +1,14 @@
-#!/usr/bin/env python
-# coding: utf-8
+'''
+Daniel Penna Chaves Bertazzo - 10349561
 
-# In[1]:
+SCC0251 - Digital Image Processing - ICMC/USP
+First semester of 2020
 
+Short assignment 1: Filtering in Fourier Domain
+'''
 
 import numpy as np
 import imageio
-
-
-# # DFT
-
-# In[2]:
-
 
 # Computes the 2D discrete Fourier transform
 def DFT2D(f):
@@ -30,16 +27,11 @@ def DFT2D(f):
     return F/np.sqrt(n*m)
 
 
-# # Inverse DFT 
-
-# In[3]:
-
-
 # Computes the inverse 2D discrete Fourier transform
 def inverse_DFT2D(F):
     
     f = np.zeros(F.shape, dtype=np.complex64)
-    n,m = f.shape[0:2]
+    n,m = F.shape[0:2]
     
     x = np.arange(n)
     
@@ -51,11 +43,6 @@ def inverse_DFT2D(F):
     return f/np.sqrt(n*m)
 
 
-# # Finding p2
-
-# In[4]:
-
-
 # Finds second peak of a given fourier spectrum
 def find_p2(F):
     # Flattens the spectrum
@@ -63,11 +50,6 @@ def find_p2(F):
     
     # Returns max value in the spectrum, besides the first one (relative to index 0)
     return np.amax(np.real(np.abs(flat[1:flat.shape[0]])))
-
-
-# # Filtering spectrum
-
-# In[5]:
 
 
 # Sets to 0 all coefficients for which the Fourier Spectrum is below T% of the second peak, that is, |F|< p2*T
@@ -80,14 +62,11 @@ def filter_spectrum(F, p2, threshold):
     # Sets to 0 all coefficients less than p2*T
     F = np.where(np.real(np.abs(F)) < cut, 0, F)
     
-    return n
+    # Returns the new spectrum and the number of coeffs
+    return (F, n)
 
 
-# # Execution 
-
-# In[8]:
-
-
+# ******************************************************************** "Main" ********************************************************************
 filename  = str(input()).rstrip()
 threshold = float(input())
 
@@ -100,19 +79,13 @@ F = DFT2D(f)
 p2 = find_p2(F)
 
 # Step 3
-n = filter_spectrum(F, p2, threshold)
+F, n = filter_spectrum(F, p2, threshold)
 
 # Step 4
 inv_f = inverse_DFT2D(F)
-
-
-# In[12]:
-
-# In[13]:
 
 
 print("Threshold=%.4f" % (p2 * threshold))
 print("Filtered Coefficients=%d" % n)
 print("Original Mean=%.2f" % np.mean(f))
 print("New Mean=%.2f" % np.mean(np.real(np.abs(inv_f))))
-
