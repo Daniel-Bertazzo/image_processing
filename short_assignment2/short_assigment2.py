@@ -1,3 +1,11 @@
+'''
+Daniel Penna Chaves Bertazzo - 10349561
+
+SCC0251 - Digital Image Processing - ICMC/USP
+First semester of 2020
+
+Short assignment 2: Image restoration
+'''
 import numpy as np
 import imageio
 from scipy.fftpack import fftn, ifftn, fftshift
@@ -6,12 +14,14 @@ from scipy.fftpack import fftn, ifftn, fftshift
 def normalize(r, a, b):
     return a + (b-a)*(r - np.amin(r))/( np.amax(r) - np.amin(r))
 
+# Creates gaussian filter 
 def gaussian_filter(k=3, sigma=1.0):
     arx = np.arange((-k // 2) + 1.0, (k // 2) + 1.0)
     x, y = np.meshgrid(arx, arx)
     filt = np.exp( -(1/2)*(np.square(x) + np.square(y))/np.square(sigma) )
     return filt/np.sum(filt)
 
+# Removes the noise of an image
 def denoise(G, H):
     '''
         Denoise an image g using a gaussian filter h, given their fourier transformations (G and H)
@@ -32,6 +42,9 @@ def CLS(G, H, P, gamma):
       
     return np.real(fftshift(ifftn(F_hat)))
 
+
+# ***************************************************************** "Main" *****************************************************************
+
 # Reads input
 filename = str(input()).rstrip()
 g        = imageio.imread(filename)
@@ -41,7 +54,6 @@ gamma    = float(input())
 
 # Computes the gaussian filter
 h = gaussian_filter(k, sigma)
-
 # Pads the gaussian filter
 pad = (g.shape[0]//2) - h.shape[0]//2
 h_padded = np.pad(h, (pad, pad-1), mode='constant', constant_values=0)
@@ -50,8 +62,8 @@ h_padded = np.pad(h, (pad, pad-1), mode='constant', constant_values=0)
 G = fftn(g)
 H = fftn(h_padded)
 
+# Denoises the image and normalizes the values of the result
 r = denoise(G, H)
-
 r = normalize(r, 0, np.amax(g))
 
 # Initializes the laplacian operator
@@ -67,8 +79,8 @@ p_padded = np.pad(p, (pad, pad-1), mode='constant', constant_values=0)
 P = fftn(p_padded)
 R = fftn(r)
 
+# Computes the constrained least squares method and normalizes the result
 f_hat = CLS(R, H, P, gamma)
-
 f_hat = normalize(f_hat, 0, np.amax(r))
 
 print("%.1f" % np.std(f_hat))
