@@ -11,7 +11,7 @@ import imageio
 from scipy.fftpack import fftn, ifftn, fftshift
 
 # Normalizes the image to the interval [a, b]
-def normalize(r, a, b):
+def normalize(r, a=0, b=255):
     return a + (b-a)*(r - np.amin(r))/( np.amax(r) - np.amin(r))
 
 # Creates gaussian filter 
