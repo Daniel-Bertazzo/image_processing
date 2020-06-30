@@ -18,7 +18,7 @@ def normalize(r, a=0, b=255):
 
 # Root mean squared error
 def rmse(r, m):
-    n = r.shape[0] * r.shape[1]
+    n = r.shape[0] * r.shape[1] * r.shape[2]
     return np.sqrt(np.sum(np.square(m.astype(np.float64) - r.astype(np.float64)) / n))
 
 
